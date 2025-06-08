@@ -1,16 +1,11 @@
-import { signInWithGoogle } from "../features/auth/Auth";
-import { getUser } from "../features/user/UserApi";
+import { useAppDispatch } from "../app/hooks";
+import { login } from "../features/user/UserSlice";
 
 const Login = () => {
-	const getUserInfo = async () => {
-		try {
-			const user = await getUser("");
-			if (user) {
-				console.log(user);
-			}
-		} catch (error) {
-			console.error("Login failed:", error);
-		}
+	const dispatch = useAppDispatch();
+
+	const setUserId = () => {
+		dispatch(login(""));
 	};
 
 	return (
@@ -26,7 +21,7 @@ const Login = () => {
 						<button
 							type="button"
 							className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-							onClick={getUserInfo}
+							onClick={setUserId}
 						>
 							ログイン
 						</button>
