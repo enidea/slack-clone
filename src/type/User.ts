@@ -1,7 +1,7 @@
 export interface User {
 	profile_picture: string;
 	email: string;
-	displayName: string;
+	display_name: string;
 }
 
 export interface UserRef {
