@@ -9,16 +9,11 @@ const SideBar = () => {
 	const [user, setUser] = useState<User | null>();
 
 	useEffect(() => {
-		const fetchUser = async () => {
-			if (userId) {
-				const userRef = await getUser(userId);
-				if (userRef) {
-					setUser(userRef);
-				}
-			}
-		};
+		if (!userId) return;
 
-		fetchUser();
+		getUser(userId).then((userRef) => {
+			setUser(userRef);
+		});
 	}, [userId]);
 
 	return (
