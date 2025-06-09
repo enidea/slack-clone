@@ -1,11 +1,19 @@
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import db from "../../infra/db";
-import type { User } from "../../type/User";
+import type { User, UserRef } from "../../type/User";
 
 export const getUser = async (user_uid: string) => {
-	const usersRef = doc(db, "users", user_uid);
-	const docSnap = await getDoc(usersRef);
+	const user = doc(db, "users", user_uid);
+	const docSnap = await getDoc(user);
 	if (docSnap.exists()) {
 		return docSnap.data() as User;
 	}
+};
+export const postUser = async (userRef: UserRef) => {
+	const user = userRef.user;
+	await setDoc(doc(db, "users", userRef.uid), {
+		display_name: user.display_name,
+		email: user.email,
+		profile_picture: user.profile_picture,
+	});
 };
