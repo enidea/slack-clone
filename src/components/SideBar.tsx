@@ -1,19 +1,25 @@
+import { useEffect, useState } from "react";
 import { Home, ChatBubble } from "@mui/icons-material";
 import { useAppSelector } from "../app/hooks";
 import { getUser } from "../features/user/UserApi";
 import type { User } from "../type/User";
-import { useEffect, useState } from "react";
+import { signOut } from "../features/auth/Auth";
 
 const SideBar = () => {
 	const userId = useAppSelector((state) => state.user.userId);
 	const [user, setUser] = useState<User | null>();
 
 	useEffect(() => {
-		if (!userId) return;
+		const fetchUser = async () => {
+			if (userId) {
+				const userRef = await getUser(userId);
+				if (userRef) {
+					setUser(userRef);
+				}
+			}
+		};
 
-		getUser(userId).then((userRef) => {
-			setUser(userRef);
-		});
+		fetchUser();
 	}, [userId]);
 
 	return (
@@ -32,7 +38,23 @@ const SideBar = () => {
 			</div>
 			<div className="py-5 mt-auto mx-2 flex flex-col items-center">
 				<div className="bg-gray-700 p-2 rounded-lg">
-					<img src={"/default-user-icon.webp"} alt="" />
+					<img
+						src={
+							user?.profile_picture === "none"
+								? "/default-user-icon.jpeg"
+								: user?.profile_picture
+						}
+						alt="User Profile"
+						onClick={() => signOut()}
+						className="cursor-pointer"
+						tabIndex={0}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								e.preventDefault();
+								signOut();
+							}
+						}}
+					/>
 				</div>
 				<span className="text-xs">{user?.display_name}</span>
 			</div>
