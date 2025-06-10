@@ -38,23 +38,21 @@ const SideBar = () => {
 			</div>
 			<div className="py-5 mt-auto mx-2 flex flex-col items-center">
 				<div className="bg-gray-700 p-2 rounded-lg">
-					<img
-						src={
-							user?.profile_picture === "none"
-								? "/default-user-icon.jpeg"
-								: user?.profile_picture
-						}
-						alt="User Profile"
-						onClick={() => signOut()}
-						className="cursor-pointer"
-						tabIndex={0}
-						onKeyDown={(e) => {
-							if (e.key === "Enter") {
-								e.preventDefault();
-								signOut();
+					<button
+						type="button"
+						className="hover:bg-gray-600 cursor-pointer rounded-lg flex items-center justify-center w-full h-full"
+						onClick={signOut}
+					>
+						<img
+							src={
+								user?.profile_picture === "none"
+									? "/default-user-icon.jpeg"
+									: user?.profile_picture
 							}
-						}}
-					/>
+							alt="User Profile"
+							className="rounded-full object-cover"
+						/>
+					</button>
 				</div>
 				<span className="text-xs">{user?.display_name}</span>
 			</div>
