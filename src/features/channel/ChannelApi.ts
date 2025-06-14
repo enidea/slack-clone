@@ -2,14 +2,11 @@ import {
 	Timestamp,
 	addDoc,
 	collection,
-	getFirestore,
 	onSnapshot,
 	query,
 } from "firebase/firestore";
-import { firebaseApp } from "../../../firebase/firebaseConfig";
+import db from "../../infra/db";
 import type { Channel, ChannelRef } from "../../type/Channel";
-
-const db = getFirestore(firebaseApp);
 
 export const subscribeChannels = (
 	onChannelsUpdated: (channels: ChannelRef[]) => void,

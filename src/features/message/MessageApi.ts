@@ -2,15 +2,12 @@ import {
 	Timestamp,
 	addDoc,
 	collection,
-	getFirestore,
 	onSnapshot,
 	query,
 	where,
 } from "firebase/firestore";
-import { firebaseApp } from "../../../firebase/firebaseConfig";
+import db from "../../infra/db";
 import type { Message, MessageRef } from "../../type/Message";
-
-const db = getFirestore(firebaseApp);
 
 export const subscribeMessages = (
 	channelID: string,
