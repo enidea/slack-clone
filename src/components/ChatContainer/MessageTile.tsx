@@ -23,7 +23,7 @@ const MessageTile = (message: Message) => {
 		<div className="bg-gray-700 p-3 m-3 rounded-lg">
 			<div className="flex items-center mb-2">
 				<img
-					src={owner?.profile_picture || "./default-user-icon.webp"}
+					src={owner?.profile_picture}
 					alt="プロフィール画像"
 					className="w-10 h-10 rounded-full mr-2"
 				/>

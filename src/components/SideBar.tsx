@@ -44,11 +44,7 @@ const SideBar = () => {
 						onClick={signOut}
 					>
 						<img
-							src={
-								user?.profile_picture === "none"
-									? "/default-user-icon.jpeg"
-									: user?.profile_picture
-							}
+							src={user?.profile_picture}
 							alt="User Profile"
 							className="rounded-full object-cover"
 						/>
