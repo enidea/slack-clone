@@ -115,19 +115,19 @@ const MessageTile = ({ message, messageId }: MessageTileProps) => {
 						</button>
 						{showMenu && (
 							<div
-								className="absolute right-0 top-8 bg-gray-800 border border-gray-600 rounded-md shadow-lg z-10"
+								className="absolute right-0 top-8 bg-gray-800 border border-gray-600 rounded-md shadow-lg z-10 min-w-16 whitespace-nowrap"
 								onClick={(e) => e.stopPropagation()}
 							>
 								<button
 									type="button"
-									className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+									className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-md"
 									onClick={handleEdit}
 								>
 									編集
 								</button>
 								<button
 									type="button"
-									className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700"
+									className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 rounded-b-md border-t border-gray-600"
 									onClick={handleDelete}
 								>
 									削除
