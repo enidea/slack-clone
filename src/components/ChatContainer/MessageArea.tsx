@@ -54,7 +54,11 @@ const MessageArea = () => {
 		<div className="flex-1 flex flex-col bg-gray-500 text-white">
 			<div className="p-4 m-3 overflow-y-auto">
 				{messageRefs.map((messageRef) => (
-					<MessageTile {...messageRef.message} key={messageRef.id} />
+					<MessageTile
+						message={messageRef.message}
+						messageId={messageRef.id}
+						key={messageRef.id}
+					/>
 				))}
 			</div>
 

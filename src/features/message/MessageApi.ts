@@ -2,8 +2,11 @@ import {
 	Timestamp,
 	addDoc,
 	collection,
+	deleteDoc,
+	doc,
 	onSnapshot,
 	query,
+	updateDoc,
 	where,
 } from "firebase/firestore";
 import db from "../../infra/db";
@@ -54,4 +57,18 @@ export const createMessage = (
 		is_edited: false,
 		updated_at: timestamp,
 	};
+};
+
+export const updateMessage = async (messageId: string, newText: string) => {
+	const messageRef = doc(db, "messages", messageId);
+	await updateDoc(messageRef, {
+		text: newText,
+		is_edited: true,
+		updated_at: Timestamp.fromDate(new Date()),
+	});
+};
+
+export const deleteMessage = async (messageId: string) => {
+	const messageRef = doc(db, "messages", messageId);
+	await deleteDoc(messageRef);
 };
