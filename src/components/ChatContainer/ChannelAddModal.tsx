@@ -1,20 +1,24 @@
 import { type ChangeEvent, useState } from "react";
 import { createChannel, postChannel } from "../../features/channel/ChannelApi";
+import { useAppSelector } from "../../app/hooks";
 
 type Props = { handleCloseModal: () => void };
 
 export const ChannelAddModal = ({ handleCloseModal }: Props) => {
 	const [channelName, setChannelName] = useState("");
+	const currentWorkspaceId = useAppSelector(
+		(state) => state.workspace.currentWorkspaceId,
+	);
 
 	const handleChannelNameChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setChannelName(e.target.value);
 	};
 
 	const handleAddChannel = async () => {
-		if (!channelName.trim()) return;
+		if (!channelName.trim() || !currentWorkspaceId) return;
 
 		try {
-			await postChannel(createChannel(channelName));
+			await postChannel(createChannel(channelName, currentWorkspaceId));
 			setChannelName("");
 			handleCloseModal();
 		} catch (e) {

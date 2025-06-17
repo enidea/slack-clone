@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logout } from "../user/UserSlice";
 
 const initialState = {
 	currentChannelId: "",
@@ -14,6 +15,11 @@ export const channelSlice = createSlice({
 		clearChannel: (state) => {
 			state.currentChannelId = "";
 		},
+	},
+	extraReducers: (builder) => {
+		builder.addCase(logout, (state) => {
+			state.currentChannelId = "";
+		});
 	},
 });
 
