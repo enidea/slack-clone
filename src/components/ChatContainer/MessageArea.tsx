@@ -28,9 +28,9 @@ const MessageArea = () => {
 	};
 
 	const sendMessage = async () => {
-		if (userId) {
+		if (userId && message.trim()) {
 			try {
-				await postMessage(createMessage(userId, channelId, message));
+				await postMessage(createMessage(userId, channelId, message.trim()));
 				setMessage("");
 			} catch (e) {
 				console.error("Error sending message: ", e);
@@ -39,8 +39,11 @@ const MessageArea = () => {
 	};
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-		if ((e.metaKey || e.ctrlKey) && e.code === "Enter") {
-			sendMessage();
+		if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+			e.preventDefault();
+			if (message.trim()) {
+				sendMessage();
+			}
 		}
 	};
 
@@ -84,6 +87,9 @@ const MessageArea = () => {
 							>
 								<SendIcon />
 							</button>
+						</div>
+						<div className="text-xs text-gray-400 mt-1 mx-2">
+							Ctrl+Enter で送信
 						</div>
 					</div>
 				</>
