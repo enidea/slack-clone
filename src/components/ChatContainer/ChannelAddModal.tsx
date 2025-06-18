@@ -45,7 +45,7 @@ export const ChannelAddModal = ({ handleCloseModal }: Props) => {
 					<h3 className="font-semibold text-lg">チャンネルを作成する</h3>
 					<button
 						type="button"
-						className="text-black close-modal"
+						className="close-modal"
 						onClick={handleCloseModal}
 					>
 						&times;
@@ -54,7 +54,7 @@ export const ChannelAddModal = ({ handleCloseModal }: Props) => {
 				<div className="p-4">
 					<input
 						type="text"
-						className="border rounded w-full py-2 px-3 text-grey-darkest text-black"
+						className="border rounded w-full py-2 px-3 text-grey-darkest"
 						placeholder="名前"
 						onChange={handleChannelNameChange}
 					/>
@@ -62,7 +62,7 @@ export const ChannelAddModal = ({ handleCloseModal }: Props) => {
 						チャンネルは、特定のトピックに関する会話が行われる場所です。見つけやすく、わかりやすい名前を使用してください。
 					</p>
 				</div>
-				<div className="flex justify-end items-center w-100 border-t p-4">
+				<div className="flex justify-end items-center border-t p-4">
 					<button
 						type="button"
 						className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
