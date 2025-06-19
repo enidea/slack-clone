@@ -1,10 +1,12 @@
 import { type ChangeEvent, useState } from "react";
 import { createChannel, postChannel } from "../../features/channel/ChannelApi";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectChannel } from "../../features/channel/ChannelSlice";
 
 type Props = { handleCloseModal: () => void };
 
 export const ChannelAddModal = ({ handleCloseModal }: Props) => {
+	const dispatch = useAppDispatch();
 	const [channelName, setChannelName] = useState("");
 	const currentWorkspaceId = useAppSelector(
 		(state) => state.workspace.currentWorkspaceId,
@@ -18,9 +20,12 @@ export const ChannelAddModal = ({ handleCloseModal }: Props) => {
 		if (!channelName.trim() || !currentWorkspaceId) return;
 
 		try {
-			await postChannel(createChannel(channelName, currentWorkspaceId));
+			const newChannel = await postChannel(
+				createChannel(channelName, currentWorkspaceId),
+			);
 			setChannelName("");
 			handleCloseModal();
+			dispatch(selectChannel(newChannel.id));
 		} catch (e) {
 			console.error("Error adding document: ", e);
 		}

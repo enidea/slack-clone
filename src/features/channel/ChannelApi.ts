@@ -36,7 +36,7 @@ export const subscribeChannels = (
 	);
 };
 export const postChannel = async (channel: Channel) => {
-	await addDoc(collection(db, "channels"), channel);
+	return await addDoc(collection(db, "channels"), channel);
 };
 
 export const createChannel = (name: string, workspaceId: string): Channel => {
