@@ -5,6 +5,7 @@ import { getUser } from "../features/user/UserApi";
 import { clearWorkspace } from "../features/workspace/WorkspaceSlice";
 import type { User } from "../type/User";
 import { signOut } from "../features/auth/Auth";
+import { clearChannel } from "../features/channel/ChannelSlice";
 
 const SideBar = () => {
 	const userId = useAppSelector((state) => state.user.userId);
@@ -29,6 +30,7 @@ const SideBar = () => {
 
 	const handleSwitchWorkspace = () => {
 		dispatch(clearWorkspace());
+		dispatch(clearChannel());
 	};
 
 	return (
