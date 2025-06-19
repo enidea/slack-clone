@@ -31,6 +31,10 @@ export const subscribeMessages = (
 					message: doc.data() as Message,
 				});
 			}
+			messageRefs.sort(
+				(a, b) =>
+					b.message.created_at.toMillis() - a.message.created_at.toMillis(),
+			);
 			onMessagesUpdated(messageRefs);
 		},
 		(error) => {
