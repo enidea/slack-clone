@@ -49,10 +49,10 @@ const MessageArea = () => {
 
 	useEffect(() => {
 		if (channelId) {
-			const unsubscripbe = subscribeMessages(channelId, (messageRefs) => {
+			const unsubscribe = subscribeMessages(channelId, (messageRefs) => {
 				setMessageRefs(messageRefs);
 			});
-			return () => unsubscripbe();
+			return () => unsubscribe();
 		}
 
 		setMessageRefs([]);
