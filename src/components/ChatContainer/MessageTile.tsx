@@ -83,99 +83,101 @@ const MessageTile = ({ message, messageId }: MessageTileProps) => {
 	};
 
 	return (
-		<div className="bg-gray-700 p-3 m-3 rounded-lg">
-			<div className="flex items-center mb-2">
-				<img
-					src={owner?.profile_picture}
-					alt="プロフィール画像"
-					className="w-10 h-10 rounded-full mr-2"
-				/>
-				<div className="flex-1">
-					<div className="text-sm font-semibold">
-						{owner?.display_name || "unknown"}
-						{message.is_edited && (
-							<span className="text-xs text-gray-400 ml-2">(編集済み)</span>
-						)}
+		owner && (
+			<div className="bg-gray-700 p-3 m-3 rounded-lg">
+				<div className="flex items-center mb-2">
+					<img
+						src={owner.profile_picture}
+						alt="プロフィール画像"
+						className="w-10 h-10 rounded-full mr-2"
+					/>
+					<div className="flex-1">
+						<div className="text-sm font-semibold">
+							{owner.display_name}
+							{message.is_edited && (
+								<span className="text-xs text-gray-400 ml-2">(編集済み)</span>
+							)}
+						</div>
+						<div className="text-xs text-gray-400">
+							{message.created_at.toDate().toLocaleString() || ""}
+						</div>
 					</div>
-					<div className="text-xs text-gray-400">
-						{message.created_at.toDate().toLocaleString() || ""}
-					</div>
-				</div>
-				{isOwner && (
-					<div className="relative">
-						<button
-							type="button"
-							className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-600 rounded"
-							onClick={(e) => {
-								e.stopPropagation();
-								setShowMenu(!showMenu);
-							}}
-						>
-							<MoreVertIcon className="text-gray-300" fontSize="small" />
-						</button>
-						{showMenu && (
-							<div
-								className="absolute right-0 top-8 bg-gray-800 border border-gray-600 rounded-md shadow-lg z-10 min-w-16 whitespace-nowrap"
-								onClick={(e) => e.stopPropagation()}
+					{isOwner && (
+						<div className="relative">
+							<button
+								type="button"
+								className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-600 rounded"
+								onClick={(e) => {
+									e.stopPropagation();
+									setShowMenu(!showMenu);
+								}}
 							>
-								<button
-									type="button"
-									className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-md"
-									onClick={handleEdit}
+								<MoreVertIcon className="text-gray-300" fontSize="small" />
+							</button>
+							{showMenu && (
+								<div
+									className="absolute right-0 top-8 bg-gray-800 border border-gray-600 rounded-md shadow-lg z-10 min-w-16 whitespace-nowrap"
+									onClick={(e) => e.stopPropagation()}
 								>
-									編集
-								</button>
-								<button
-									type="button"
-									className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 rounded-b-md border-t border-gray-600"
-									onClick={handleDelete}
-								>
-									削除
-								</button>
-							</div>
-						)}
+									<button
+										type="button"
+										className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-md"
+										onClick={handleEdit}
+									>
+										編集
+									</button>
+									<button
+										type="button"
+										className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 rounded-b-md border-t border-gray-600"
+										onClick={handleDelete}
+									>
+										削除
+									</button>
+								</div>
+							)}
+						</div>
+					)}
+				</div>
+				{isEditing ? (
+					<div className="space-y-2">
+						<textarea
+							value={editText}
+							onChange={(e) => setEditText(e.target.value)}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+									handleSaveEdit();
+								} else if (e.key === "Escape") {
+									handleCancelEdit();
+								}
+							}}
+							className="w-full bg-gray-600 text-white p-2 rounded resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+							rows={3}
+						/>
+						<div className="flex gap-2">
+							<button
+								type="button"
+								className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded"
+								onClick={handleSaveEdit}
+							>
+								保存
+							</button>
+							<button
+								type="button"
+								className="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white text-sm rounded"
+								onClick={handleCancelEdit}
+							>
+								キャンセル
+							</button>
+						</div>
+						<p className="text-xs text-gray-400">
+							Cmd+Enter で保存、Escape でキャンセル
+						</p>
 					</div>
+				) : (
+					<p className="text-gray-300">{message.text}</p>
 				)}
 			</div>
-			{isEditing ? (
-				<div className="space-y-2">
-					<textarea
-						value={editText}
-						onChange={(e) => setEditText(e.target.value)}
-						onKeyDown={(e) => {
-							if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-								handleSaveEdit();
-							} else if (e.key === "Escape") {
-								handleCancelEdit();
-							}
-						}}
-						className="w-full bg-gray-600 text-white p-2 rounded resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-						rows={3}
-					/>
-					<div className="flex gap-2">
-						<button
-							type="button"
-							className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded"
-							onClick={handleSaveEdit}
-						>
-							保存
-						</button>
-						<button
-							type="button"
-							className="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white text-sm rounded"
-							onClick={handleCancelEdit}
-						>
-							キャンセル
-						</button>
-					</div>
-					<p className="text-xs text-gray-400">
-						Cmd+Enter で保存、Escape でキャンセル
-					</p>
-				</div>
-			) : (
-				<p className="text-gray-300">{message.text}</p>
-			)}
-		</div>
+		)
 	);
 };
 
