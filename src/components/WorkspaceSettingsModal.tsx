@@ -95,7 +95,7 @@ const WorkspaceSettingsModal = ({ onClose }: WorkspaceSettingsModalProps) => {
 										この招待コードを新しいメンバーに共有してください（7日間有効）
 									</p>
 									<div className="flex items-center gap-2 p-3 bg-gray-100 rounded-lg">
-										<code className="flex-1 font-mono text-sm">
+										<code className="flex-1 font-mono text-sm text-black">
 											{inviteCode}
 										</code>
 										<button
