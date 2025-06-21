@@ -8,10 +8,13 @@ import {
 } from "../features/workspace/WorkspaceApi";
 import type { WorkspaceRef } from "../type/Workspace";
 import AddIcon from "@mui/icons-material/Add";
+import LinkIcon from "@mui/icons-material/Link";
+import WorkspaceJoinModal from "./WorkspaceJoinModal";
 
 const WorkspaceSelector = () => {
 	const [workspaces, setWorkspaces] = useState<WorkspaceRef[]>([]);
 	const [showCreateModal, setShowCreateModal] = useState(false);
+	const [showJoinModal, setShowJoinModal] = useState(false);
 	const [workspaceName, setWorkspaceName] = useState("");
 	const [workspaceDescription, setWorkspaceDescription] = useState("");
 	const [isCreating, setIsCreating] = useState(false);
@@ -112,14 +115,25 @@ const WorkspaceSelector = () => {
 						)}
 					</div>
 
-					<button
-						type="button"
-						className="w-full p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2 transition-colors"
-						onClick={() => setShowCreateModal(true)}
-					>
-						<AddIcon fontSize="small" />
-						新しいワークスペースを作成
-					</button>
+					<div className="space-y-3">
+						<button
+							type="button"
+							className="w-full p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2 transition-colors"
+							onClick={() => setShowCreateModal(true)}
+						>
+							<AddIcon fontSize="small" />
+							新しいワークスペースを作成
+						</button>
+
+						<button
+							type="button"
+							className="w-full p-3 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center justify-center gap-2 transition-colors"
+							onClick={() => setShowJoinModal(true)}
+						>
+							<LinkIcon fontSize="small" />
+							ワークスペースに参加
+						</button>
+					</div>
 				</div>
 			</div>
 
@@ -190,6 +204,10 @@ const WorkspaceSelector = () => {
 						</div>
 					</div>
 				</div>
+			)}
+			{/* ワークスペース参加モーダル */}
+			{showJoinModal && (
+				<WorkspaceJoinModal onClose={() => setShowJoinModal(false)} />
 			)}
 		</div>
 	);

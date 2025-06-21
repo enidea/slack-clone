@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { ChatBubble, Business } from "@mui/icons-material";
+import { ChatBubble, Business, Settings } from "@mui/icons-material";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { getUser } from "../features/user/UserApi";
 import { clearWorkspace } from "../features/workspace/WorkspaceSlice";
 import type { User } from "../type/User";
 import { signOut } from "../features/auth/Auth";
 import { clearChannel } from "../features/channel/ChannelSlice";
+import WorkspaceSettingsModal from "./WorkspaceSettingsModal";
 
 const SideBar = () => {
 	const userId = useAppSelector((state) => state.user.userId);
@@ -13,6 +14,7 @@ const SideBar = () => {
 		(state) => state.workspace.workspaceName,
 	);
 	const [user, setUser] = useState<User | null>();
+	const [showSettingsModal, setShowSettingsModal] = useState(false);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -50,6 +52,24 @@ const SideBar = () => {
 					{workspaceName ? workspaceName.slice(0, 6) : "WS"}
 				</span>
 			</div>
+
+			{/* ワークスペース設定ボタン */}
+			{workspaceName && (
+				<div className="py-2 flex flex-col items-center">
+					<div className="bg-gray-700 p-2 rounded-lg">
+						<button
+							type="button"
+							className="hover:bg-gray-600 cursor-pointer rounded-lg flex items-center justify-center w-full h-full"
+							onClick={() => setShowSettingsModal(true)}
+							title="ワークスペース設定"
+						>
+							<Settings />
+						</button>
+					</div>
+					<span className="text-xs">設定</span>
+				</div>
+			)}
+
 			<div className="py-5 flex flex-col items-center">
 				<div className="bg-gray-700 p-2 rounded-lg">
 					<ChatBubble />
@@ -72,6 +92,11 @@ const SideBar = () => {
 				</div>
 				<span className="text-xs">{user?.display_name}</span>
 			</div>
+
+			{/* ワークスペース設定モーダル */}
+			{showSettingsModal && (
+				<WorkspaceSettingsModal onClose={() => setShowSettingsModal(false)} />
+			)}
 		</div>
 	);
 };

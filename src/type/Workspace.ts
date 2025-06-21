@@ -25,3 +25,16 @@ export interface WorkspaceMemberRef {
 	id: string;
 	member: WorkspaceMember;
 }
+
+export interface WorkspaceInvite {
+	workspace_id: string;
+	invite_code: string;
+	created_at: Timestamp;
+	expires_at: Timestamp;
+	is_active: boolean;
+}
+
+export interface WorkspaceInviteRef {
+	id: string;
+	invite: WorkspaceInvite;
+}
