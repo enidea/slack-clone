@@ -84,7 +84,7 @@ const MessageTile = ({ message, messageId }: MessageTileProps) => {
 
 	return (
 		owner && (
-			<div className="bg-gray-700 p-3 m-3 rounded-lg">
+			<div className="bg-gray-700 p-3 m-3 rounded-lg group">
 				<div className="flex items-center mb-2">
 					<img
 						src={owner.profile_picture}
